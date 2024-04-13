@@ -1,3 +1,7 @@
+# My Personal Website
+
+### Design for this is inspired by [juw.ee](juw.ee)
+
 # Astro Starter Kit: Minimal
 
 ```sh

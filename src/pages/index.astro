@@ -1,6 +1,6 @@
 ---
 import Base from "@layouts/base.astro"
-import Dragonfly from "@components/dragonfly.astro"
+import Pfp from "@components/pfp.astro"
 import Spinner from "@components/spinner.tsx"
 import { getCollection } from 'astro:content';
 
@@ -9,51 +9,25 @@ const posts = await getCollection('blog')
 
 <Base>
 <div class="flex flex-col gap-9 my-9">
-    <div class="dragonfly dark:text-zinc-500 text-zinc-600">
-        <Dragonfly />
-    </div>
-
-    <div>
-        <Spinner client:load />
-        <ul class="grid grid-cols-2 gap-3 mt-3">
-            <li class="border border-zinc-300 dark:border-zinc-700 p-3">
-                <a href="/">
-                    <div class="text-lg">rkive</div>
-                    <p class="mt-3 text-sm">what is this??? soon :)</p>
-                </a>
-            </li>
-            <li class="border border-zinc-300 dark:border-zinc-700 p-3">
-                <a href="https://forest.juw.ee">
-                    <div class="text-lg">forest</div>
-                    <p class="mt-3 text-xs">aka a guilt-free place where i publish my notes</p>
-                </a>
-            </li>
-        </ul>
-    </div>
-
-    <ul class="flex flex-col">
-        <h1 class="border-t border-b my-3 p-1 text-sm border-zinc-300 dark:border-zinc-700">INDEX</h1>
-        <div class="grid grid-cols-2 lg:grid-cols-3">
-            <div>
-                <a href="/links">
-                    <li>[001] links</li>
-                </a>
-                <a href="/library">
-                    <li>[002] library</li>
-                </a>
-                <a href="/uses">
-                    <li>[003] uses</li>
-                </a>
-            </div>
+    <div class="dragonfly-container flex w-full justify-around">
+        <div class="dragonfly   dark:text-zinc-500 text-zinc-600 ">
+            <Pfp />
         </div>
-    </ul>
+        <div class= "about  flex flex-col justify-end h-full dark:border-zinc-700 p-3">
+            <h1 class=" border-b my-3 p-1 text-sm border-zinc-300 dark:border-zinc-700"> <span class="text-orange-500">~></span> ABOUT</h1>
+            <p class="mt-3 text-sm"> 
+            hii there myself Manish, i'm 20 y/o engineering student working around web dev and ml with tons of interests ranging from 
+             linux, psychology, space, robotics, f1, history, anime and music. and yes i love cats
+             </p>
+        </div>
+    </div>
 
     <ol class="list-circle">
-        <h1 class="border-t border-b my-3 p-1 text-sm border-zinc-300 dark:border-zinc-700">LATEST POSTS</h1>
+        <h1 class="border-t border-b my-3 p-1 text-sm border-zinc-300 dark:border-zinc-700"> <span class="text-orange-500">~></span>  LATEST POSTS</h1>
         {
         posts.map(p => (
         <a href={"blog/" + p.slug}>
-            <li class="grid grid-cols-2 cursor-pointer gap-5">
+            <li class="px-8 grid grid-cols-2 cursor-pointer gap-5">
                 <p class="hover:font-bold">{p.data.title}</p>
                 <p class="text-end">{p.data.date}</p>
             </li>
@@ -73,11 +47,31 @@ const posts = await getCollection('blog')
         font-weight: bold;
     }
 
-    .dragonfly {
-        width: 100%;
-        display: grid;
-        overflow: hidden;
-        text-align: center;
-        font-size: 75%;
-    }
+.dragonfly-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 35vh;
+}
+
+.dragonfly {
+  flex: 1;
+  width:100%;
+  text-align: center;
+  font-size: 0.5rem;
+}
+
+.about {
+  flex: 1;
+  text-align: left;
+  font-size: 1.5rem;
+}
+
+@media (max-width: 720px) {
+  .dragonfly-container {
+    flex-direction: column;
+    gap: 5%;
+    margin-top: 18%;
+    margin-bottom: 18%;
+  }}
 </style>

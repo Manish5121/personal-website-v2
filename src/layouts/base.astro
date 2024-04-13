@@ -8,27 +8,26 @@ const { title } = Astro.props
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>juwee {title && "| " + title}</title>
+    <title>Manish {title && "| " + title}</title>
 </head>
 
-<body class="dark:bg-zinc-950 dark:text-zinc-300 bg-zinc-100 text-zinc-700">
+<body class="dark:bg-zinc-950 dark:text-zinc-300 text-zinc-700">
     <div id="wrapper">
         <nav class="flex justify-between items-center w-full cursor-pointer select-none">
 
-            <a href="/" class="font-bold text-lg">juw.ee</a>
+            <a href="/" class="font-bold text-lg">micky</a>
             <div class="flex gap-9 items-center">
                 <a href="/now" class="text-lg hover:font-bold">now</a>
                 <div id="switch" class="text-3xl">○</div>
             </div>
         </nav>
         <slot />
-        <footer>
-            <p class="my-12">. -. -..</p>
+        <footer class="py-5">
+            <h1 class="border-t border-b my-3 p-1 text-sm border-zinc-300 dark:border-zinc-700"> <span class="text-orange-500">~></span> SOCIALS</h1>
 
-            <ul>
-                <li><a href="mailto:mail@juw.ee?subject=hello!">mail@juw.ee</a></li>
-                <li><a href="https://github.com/juweeism">github</a></li>
-                <li><a href="https://twitter.com/juweeism">twitter</a></li>
+            <ul class="px-8">
+                <li><a href="https://github.com/Manish5121">github</a></li>
+                <li><a href="https://twitter.com/Micky__21_">twitter</a></li>
             </ul>
         </footer>
     </div>
@@ -37,6 +36,8 @@ const { title } = Astro.props
 </html>
 
 <style>
+      
+      
     li {
         text-decoration: underline;
     }
