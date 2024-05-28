@@ -12,6 +12,7 @@ const { title } = Astro.props
 </head>
 
 <body class="dark:bg-zinc-950 dark:text-zinc-300 text-zinc-700">
+    
     <div id="wrapper">
         <nav class="flex justify-between items-center w-full cursor-pointer select-none">
 
@@ -77,6 +78,7 @@ const { title } = Astro.props
         const isDark = element.classList.contains("dark");
         localStorage.setItem("theme", isDark ? "dark" : "light");
     }
-
+    
+    
     document.getElementById("switch").addEventListener("click", handleToggleClick);
 </script>
