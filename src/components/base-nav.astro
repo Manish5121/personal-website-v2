@@ -1,0 +1,35 @@
+---
+import { NAV } from '~/constants/consts';
+import { cn } from '~/libs/utils';
+import { DotIcon } from './ui/icons';
+
+const { class: className, highlightNavItem } = Astro.props;
+
+const currentNavItem = Astro.url.pathname.split('/').filter(Boolean).join('');
+---
+
+<div class={cn('flex items-center gap-2 font-serif text-sm', className)}>
+  <div>
+    <span>by</span>
+    <a class="link ml-0.5" href="/">
+      Manish Gambhirrao
+    </a>
+  </div>
+  <DotIcon className="h-2 w-2 text-second" />
+  <div class="flex items-center gap-2">
+    {
+      NAV.map((navItem) => (
+        <a
+          class={cn(
+            'external-link',
+            (navItem === currentNavItem || navItem === highlightNavItem) &&
+              'font-bold no-underline before:bg-selection before:ring-border hover:before:ring-1',
+          )}
+          href={`/${navItem}`}
+        >
+          {navItem.charAt(0).toUpperCase() + navItem.slice(1)}
+        </a>
+      ))
+    }
+  </div>
+</div>

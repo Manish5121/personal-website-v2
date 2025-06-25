@@ -1,0 +1,99 @@
+---
+const currentPath = Astro.url.pathname;
+const navItems = [
+  { name: 'about', href: '/' },
+  { name: 'thoughts', href: '/blog' },
+  { name: 'projects', href: '/projects' }
+];
+function isActive(href: string, currentPath: string) {
+  if (href === '/' && currentPath === '/') return true;
+  if (href !== '/' && currentPath.startsWith(href)) return true;
+  return false;
+}
+---
+<nav class="navbar">
+  <ul class="navbar-list">
+    {navItems.map((item) => (
+      <li>
+        <a 
+          href={item.href}
+          class={`navbar-link ${isActive(item.href, currentPath) ? 'navbar-link-active' : ''}`}
+        >
+          {item.name}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+<style>
+  .navbar {
+    position: fixed;
+    top: var(--page-top, 80px);
+    left: 0;
+    z-index: 10;
+    pointer-events: none;
+  }
+  .navbar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    list-style: none;
+    pointer-events: auto;
+    text-align: right;
+  }
+  .navbar-link {
+    font-size: 0.875rem;
+    font-weight: 400;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: block;
+    padding: 0rem 0rem;
+    text-align: right;
+    color: var(--second);
+  }
+  .navbar-link:hover {
+    color: var(--heading);
+  }
+  .navbar-link-active {
+    color: var(--heading);
+  }
+  
+  /* Desktop positioning - align with content left edge */
+  /* Calculate breakpoint: content-width (75ch ≈ 1200px) + navbar space (8rem ≈ 128px) + padding (2rem ≈ 32px) */
+  @media (min-width: 1100px) {
+    .navbar {
+      left: calc(50% - var(--content-max-width, 75ch) / 2 - 8rem);
+    }
+    .navbar-list {
+      border-right: 1px solid var(--border, rgba(255,255,255,0.2));
+      padding-right: 3rem;
+    }
+  }
+  
+  /* Mobile - top right navigation (no vertical line) */
+  @media (max-width: 1099px) {
+    .navbar {
+      position: fixed;
+      top: 1rem;
+      left: auto;
+      right: 1rem;
+      background: none;
+      backdrop-filter: none;
+      pointer-events: auto;
+      padding: 0;
+      z-index: 20;
+    }
+    .navbar-list {
+      flex-direction: row;
+      justify-content: flex-end;
+      text-align: right;
+      border: none;
+      padding-right: 0;
+      gap: 1rem;
+    }
+    .navbar-link {
+      padding: 0.5rem;
+      text-align: right;
+    }
+  }
+</style>

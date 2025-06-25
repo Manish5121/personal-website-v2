@@ -1,11 +1,58 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import BaseHeader from '~/components/base-header.astro';
+import { Icon } from 'astro-icon/components';
+import MainLayout from '~/layouts/main-layout.astro';
+import { LINKS } from '../constants/consts';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<MainLayout class="font-serif">
+  <BaseHeader title="Manish Gambhirrao" location="Pune, India" pfp="/pfp.jpg" />
+
+  <div data-animate data-animate-speed="slow">
+    {/* Intro */}
+    <div class="my-7">
+      <p>
+       Hi! I'm Manish, and welcome to my corner of the internet.
+       I'm a <b> Fullstack Developer and AI Engineer </b> with a degree in AI and Data Science. 
+       I love building impactful projects, from AI-driven solutions to web applications. 
+       Previously, I’ve worked at two startups and delivered over 10+ freelance projects
+      <p>
+        I have a variety of interests, including human psychology, space, robotics, history, philosophy, art, photography.... shit just keep increasing
+      
+      </p> 
+    </div>
+
+    {/* Current Work */}
+    <div class="my-7">
+      <p>I’m <b>open to work, freelance, or collaborating </b> on exciting projects.</p>
+
+      {/* Social Links */}
+  
+      <div class="socials grid w-fit grid-cols-3 gap-3 pt-4 tracking-tight md:flex md:flex-row md:items-start md:gap-4">
+        {
+          LINKS.map((link) => (
+            <a
+              href={link.url}
+              target={link.target}
+              rel={link.target === '_blank' ? 'noopener noreferrer' : undefined}
+              class="group flex items-center underline-offset-4 transition duration-150 ease-in-out md:hover:text-primary md:hover:underline"
+            >
+              <Icon name={link.icon} size={14} class="mr-1.5" />
+              <span >{link.name}</span>
+              
+            </a>
+          ))
+        }
+      </div>
+
+   <div class="my-7">
+    <p>currently, I’m:</p>
+    <ul class="list-disc pl-5">
+      <li>Diving into Reinforcement Learning and Reasoning Models.</li>
+      <li>Speedrunning Ilya’s 30 Under 30 list.</li>
+      <li>Working on improving my writing and documenting my insights.</li>
+      <li>Reading <em>The Lean Startup</em> by Eric Ries.</li>
+    </ul>
+  </div> 
+  </div>
+</MainLayout>

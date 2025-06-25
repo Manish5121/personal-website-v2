@@ -1,0 +1,52 @@
+---
+import ThemeToggle from './theme-toggle';
+import {SolarMagniferLinear} from "~/components/ui/icons"
+
+type Props = {
+  title: string;
+  description?: string;
+  location?: string;
+  pfp?: string;
+  showSearch?: boolean; // New prop to control search icon visibility
+};
+
+const { title, location, description, pfp, showSearch = false } = Astro.props;
+---
+
+<div class="mb-7 font-serif">
+  <div class="flex items-center justify-between">
+    <div class="grid grid-cols-[auto_1fr] items-center gap-3">
+      {pfp && (
+        <img
+          src={pfp}
+          alt={`${title}'s profile picture`}
+          class="h-12 w-12 object-cover row-span-2"
+        />
+      )}
+      <div class="flex flex-col">
+        <h1 class="font-serif text-xl leading-7 text-heading">{title}</h1>
+        {location && <h3 class="text-sm text-second">{location}</h3>}
+      </div>
+    </div>
+    <div class="flex gap-2 items-center">
+      {showSearch && (
+        <button aria-label="Search">
+          <SolarMagniferLinear/>
+        </button>
+      )}
+      <ThemeToggle client:load />
+    </div>
+  </div>
+  {description && <p class="mt-2 text-sm text-second">{description}</p>}
+  <slot />
+</div>
+
+<style>
+  /* Ensure the image height matches the text content */
+  .grid {
+    align-items: start; /* Aligns grid items to the top if content varies */
+  }
+  .row-span-2 {
+    grid-row: span 2; /* Makes the image span the height of two rows */
+  }
+</style>

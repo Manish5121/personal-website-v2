@@ -1,0 +1,43 @@
+---
+import '@shikijs/twoslash/style-rich.css';
+import '~/styles/mdx.css';
+
+import { format } from 'date-fns';
+import type { CollectionEntry } from 'astro:content';
+import BaseHeader from '~/components/base-header.astro';
+import MainLayout from '~/layouts/main-layout.astro';
+
+
+export type Props = {
+  post: CollectionEntry<'blog'>;
+  prevPost?: CollectionEntry<'blog'>;
+  nextPost?: CollectionEntry<'blog'>;
+};
+
+const { post, prevPost, nextPost } = Astro.props;
+
+const { title, date, year } = post.data;
+const { Content } = await post.render();
+---
+
+<MainLayout seo={{ title }} >
+  <BaseHeader title={title} description={format(new Date(`${date}, ${year}`), 'MMM dd, yyyy')} />
+  <article class="mdx prose prose-invert max-w-none mt-14">
+    <Content />
+  </article>
+  <footer class="mt-8">
+    <div class="flex justify-between text-sm text-second">
+      {prevPost && (
+        <a href={`/blog/${prevPost.slug}`} class="hover:text-heading">
+          ← {prevPost.data.title}
+        </a>
+      )}
+      <span class="flex-1"></span>
+      {nextPost && (
+        <a href={`/blog/${nextPost.slug}`} class="hover:text-heading">
+          {nextPost.data.title} →
+        </a>
+      )}
+    </div>
+  </footer>
+</MainLayout>

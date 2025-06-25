@@ -1,0 +1,34 @@
+---
+import '~/styles/global.css';
+import BaseFooter from '~/components/base-footer.astro';
+import BaseHead from '~/components/base-head.astro';
+import BaseNavbar from '~/components/base-navbar.astro';
+import ThemeHeadScript from '~/components/theme-head-script.astro';
+import type { SEOProps } from '~/types';
+
+type Props = {
+  seo?: SEOProps;
+  class?: string;
+};
+
+const { seo, ...props } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <BaseHead {...seo} />
+    <ThemeHeadScript />
+  </head>
+  <body>
+    <div class="blur-layer" aria-hidden="true"></div>
+    <BaseNavbar />
+    
+    <div  data-animate data-animate-speed="slow" class="container">
+      <main class={props.class}>
+        <slot />
+      </main>
+    </div>
+    
+    <BaseFooter />
+  </body>
+</html>

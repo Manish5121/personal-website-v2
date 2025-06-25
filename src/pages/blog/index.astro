@@ -1,0 +1,68 @@
+---
+import { format } from 'date-fns';
+import { getCollection } from 'astro:content';
+import MainLayout from '~/layouts/main-layout.astro';
+
+// Define types for better TypeScript support
+type PostData = {
+  title: string;
+  date: Date;
+  href: string;
+  year: number;
+};
+
+type PostsByYear = Record<number, PostData[]>;
+
+// Fetch all blog posts from Content Collection
+const allPosts = await getCollection('blog', (post) => !post.data.draft) || [];
+
+// Transform and group posts by year
+const postsByYear: PostsByYear = allPosts
+  .map(post => ({
+    title: post.data.title,
+    date: new Date(`${post.data.date}, ${post.data.year}`),
+    href: `/blog/${post.slug}`,
+    year: post.data.year,
+  }))
+  .sort((a, b) => b.date.getTime() - a.date.getTime()) // Sort by date descending
+  .reduce((acc: PostsByYear, post) => {
+    const year = post.year;
+    if (!acc[year]) acc[year] = [];
+    acc[year].push(post);
+    return acc;
+  }, {});
+
+const title = "Thoughts";
+---
+<MainLayout seo={{ title }} class="font-serif"> 
+  <section data-animate data-animate-speed="slow" class="group">
+    {Object.entries(postsByYear).sort((a, b) => Number(b[0]) - Number(a[0])).map(([year, postList]) => (
+      <div class="group/year relative z-0 border-t last:border-b">
+        <h3 class="absolute top-[26px] -z-10 -mx-1.5 -my-0.5 rounded-md px-1.5 py-0.5 text-sm text-second transition group-hover/year:bg-selection group-hover/year:text-heading">
+          {year}
+        </h3>
+        <ul class="py-4">
+          {postList.map((post) => (
+            <li>
+              <a
+                href={post.href}
+                class="group/item flex transition-opacity hover:!opacity-100 group-hover:opacity-40"
+              >
+                <div class="ml-[15%] flex flex-1 items-start border-t py-2 group-first-of-type/item:border-t-0">
+                  <div class="flex items-center gap-0.5 text-heading">
+                    <span class="mx-1 rounded-md px-1 transition group-hover/item:bg-selection font-normal">
+                      {post.title}
+                    </span>
+                  </div>
+                  <div class="ml-auto mt-1 flex shrink-0 items-center gap-1 rounded-md px-1 py-0.5 text-sm text-second transition group-hover/item:bg-selection group-hover/item:text-heading">
+                    <span>{format(post.date, 'MM/dd')}</span>
+                  </div>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </section>
+</MainLayout>

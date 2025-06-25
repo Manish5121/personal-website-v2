@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import PostLayout from '~/layouts/blog-layout.astro';
+
+// Fetch all blog posts from Content Collection
+const allPosts = await getCollection('blog', (post) => !post.data.draft) || [];
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', (post) => !post.data.draft) || [];
+
+  return posts.map((post, _, list) => {
+    const postList = list.sort((a, b) =>
+      new Date(`${b.data.date}, ${b.data.year}`).getTime() -
+      new Date(`${a.data.date}, ${a.data.year}`).getTime()
+    );
+    const postIndex = postList.findIndex((item) => item.id === post.id);
+
+    return {
+      params: { slug: post.slug },
+      props: {
+        post,
+        prevPost: postList[postIndex + 1],
+        nextPost: postList[postIndex - 1],
+      },
+    };
+  });
+}
+
+type Props = Awaited<ReturnType<typeof getStaticPaths>>[number]['props'];
+
+const { post, prevPost, nextPost } = Astro.props;
+---
+
+<PostLayout  {post} {prevPost} {nextPost} />

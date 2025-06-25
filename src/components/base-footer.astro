@@ -1,0 +1,17 @@
+---
+import NowTime from "~/components/now-time";
+---
+
+<footer class="container my-12">
+  <div class="mx-auto max-w-content font-serif text-sm text-second border-t border-gray-700/50 pt-4">
+    <div class="flex items-center">
+      <div>
+        Last updated on Apr 8, 2025
+      </div>
+      <div class="ml-auto flex items-center gap-2" aria-label="Year and current time">
+        <span class="w-2 h-2 bg-pink-400 rounded-full"></span>
+        <NowTime client:load />
+      </div>
+    </div>
+  </div>
+</footer>
