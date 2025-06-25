@@ -1,8 +1,8 @@
 export const SITE = {
   site: 'https://manishgambhirrao.xyz',
   title: 'manish',
-  description: 'Develop about something Soft and Simple.',
-  image: '/pfp.png',
+  description: 'meow meow',
+  image: '/pfp.jpg',
 } as const;
 
 export const NAV = ['about', 'thoughts', 'crafts'] as const;
