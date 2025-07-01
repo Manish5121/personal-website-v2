@@ -25,7 +25,7 @@ export const LINKS = [
   {
     "id": 4,
     "name": "email",
-    "url": "mailto:manishgambhirrao5121@gmail.com",
+    "url": "mailto:me@manishgambhirrao.xyz",
     "target": "_blank",
     "icon": "email"
   }
