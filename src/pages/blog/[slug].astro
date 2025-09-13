@@ -9,10 +9,12 @@ export async function getStaticPaths() {
   const posts = await getCollection('blog', (post) => !post.data.draft) || [];
 
   return posts.map((post, _, list) => {
-    const postList = list.sort((a, b) =>
-      new Date(`${b.data.date}, ${b.data.year}`).getTime() -
-      new Date(`${a.data.date}, ${a.data.year}`).getTime()
-    );
+    const postList = list.sort((a, b) => {
+      // Convert "MM. DD" format to "MM/DD/YYYY" for proper date parsing
+      const dateA = `${a.data.date.replace('. ', '/')}/${a.data.year}`;
+      const dateB = `${b.data.date.replace('. ', '/')}/${b.data.year}`;
+      return new Date(dateB).getTime() - new Date(dateA).getTime();
+    });
     const postIndex = postList.findIndex((item) => item.id === post.id);
 
     return {

@@ -16,12 +16,31 @@ export type Props = {
 
 const { post, prevPost, nextPost } = Astro.props;
 
-const { title, date, year } = post.data;
+const { title, date, year, description } = post.data;
 const { Content } = await post.render();
+
+// Extract the first image from the blog post content
+let firstImage = null;
+const imageRegex = /!\[.*?\]\((.*?)\)/;
+const match = post.body.match(imageRegex);
+if (match) {
+  firstImage = match[1];
+  // Convert relative paths to absolute URLs
+  if (!firstImage.startsWith('http')) {
+    firstImage = new URL(firstImage, Astro.url.origin).toString();
+  }
+}
 ---
 
-<MainLayout seo={{ title }} >
-  <BaseHeader title={title} description={format(new Date(`${date}, ${year}`), 'MMM dd, yyyy')} />
+<MainLayout seo={{ 
+  title, 
+  description: description || format(new Date(`${date.replace('. ', '/')}/${year}`), 'MMM dd, yyyy'),
+  image: firstImage 
+}} >
+  <BaseHeader title={title} description={description} />
+  <div class="text-sm text-second mb-6">
+    {format(new Date(`${date.replace('. ', '/')}/${year}`), 'MMM dd, yyyy')}
+  </div>
   <article class="mdx prose prose-invert max-w-none mt-14">
     <Content />
   </article>
