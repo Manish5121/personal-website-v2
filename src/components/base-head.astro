@@ -51,11 +51,14 @@ const jsonLd = {
 <meta name="description" content={description} />
 
 {/* Open Graph / Facebook */}
-<meta property="og:type" content="website" />
+<meta property="og:type" content="article" />
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={imageURL} />
+<meta property="og:image:alt" content={title} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
 
 {/* Twitter */}
 <meta property="twitter:card" content="summary_large_image" />
@@ -63,6 +66,7 @@ const jsonLd = {
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={imageURL} />
+<meta property="twitter:image:alt" content={title} />
 
 {/* Sitemap */}
 <link rel="sitemap" href="/sitemap.xml" />
